@@ -32,19 +32,16 @@ var stringifyJSON = function(obj) {
   }
 
   else {
-  	if(Object.keys(obj).length === 0) {
-  		return '{}';
-  	}
-  	console.log(obj);
 	var returnString = '{';
 	for(var key in obj) {
-	  //console.log(obj);
-	  //console.log(obj.key);
-	  returnString += (stringifyJSON(key) + ':' + stringifyJSON(obj[key]) + ',');
+	  if(key !== 'functions' && key !== 'undefined') {
+ 	    returnString += (stringifyJSON(key) + ':' + stringifyJSON(obj[key]) + ',');
+	  }	  
 	}
-	returnString = returnString.substring(0, returnString.length - 1);
+	if(returnString.length !== 1) {
+	  returnString = returnString.substring(0, returnString.length - 1);
+	}
 	returnString += '}';
-	//console.log(returnString);
 	return returnString;
   }
  // }
