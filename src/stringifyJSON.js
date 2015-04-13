@@ -6,18 +6,22 @@
 var stringifyJSON = function(obj) {
   // your code goes here
   	  
+  //base case: individual undefined or null, or undefined/null from array (objects handled differently below)	  
   if(obj === undefined || obj === null) {
   	return "null";
   }
 
+  //base case: string
   else if(typeof(obj) === 'string') {
   	return '\"' + obj + '\"';
   }
 
+  //base case: number or bool
   else if(typeof(obj) === 'number' || typeof(obj) === 'boolean') {
   	return obj.toString();
   }
 
+  //handle arrays
   else if( Array.isArray(obj) ) {
   	if(obj.length === 0) {
   		return '[]';
@@ -31,6 +35,7 @@ var stringifyJSON = function(obj) {
 	return returnString;
   }
 
+  //handle objects
   else {
 	var returnString = '{';
 	for(var key in obj) {
