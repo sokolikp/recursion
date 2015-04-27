@@ -29,25 +29,24 @@ var stringifyJSON = function(obj) {
   	var returnString = '[';
   	for(var i=0; i<obj.length-1; i++) {
   	  returnString += (stringifyJSON(obj[i]) + ',');
-	}
+  	}
     returnString += stringifyJSON(obj[obj.length-1]);
-	returnString += ']';
-	return returnString;
+  	returnString += ']';
+  	return returnString;
   }
 
   //handle objects
   else {
-	var returnString = '{';
-	for(var key in obj) {
-	  if(key !== 'functions' && key !== 'undefined') {
- 	    returnString += (stringifyJSON(key) + ':' + stringifyJSON(obj[key]) + ',');
-	  }	  
-	}
-	if(returnString.length !== 1) {
-	  returnString = returnString.substring(0, returnString.length - 1);
-	}
-	returnString += '}';
-	return returnString;
+  	var returnString = '{';
+  	for(var key in obj) {
+  	  if(key !== 'functions' && key !== 'undefined') {
+   	    returnString += (stringifyJSON(key) + ':' + stringifyJSON(obj[key]) + ',');
+  	  }	  
+  	}
+  	if(returnString.length !== 1) {
+  	  returnString = returnString.substring(0, returnString.length - 1);
+  	}
+  	returnString += '}';
+  	return returnString;
   }
- // }
 };
