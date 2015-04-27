@@ -3,5 +3,56 @@
 
 // but you're not, so you'll write it from scratch:
 var parseJSON = function(json) {
-  // your code goes here
+  if(typeof(json) !== 'string') {
+  	return SyntaxError('Error!');
+  }
+  else if(json === '[]') {
+  	return [];
+  }
+  else if (json === '{}') {
+  	return {};
+  }
+  else if (json[0] === '{') {
+  	var returnObj = {};
+  	var splitObj = json.split(': ');
+    splitObj[0] = splitObj[0].split('{')[1];
+    splitObj[splitObj.length-1] = splitObj[splitObj.length-1].split('}')[0];
+    for(var i=0; i<splitObj.length-1; i++) {
+      var keyStr = parseJSON(splitObj[i]);
+      if(splitObj[i+1].split(', "')[0] === splitObj[i+1]) {
+        var valStr = parseJSON(splitObj[i+1]);
+      }
+      else {
+        var valStr = parseJSON(splitObj[i+1].split(', "')[0]);
+        splitObj[i+1] = '"' + splitObj[i+1].split(', "')[1];
+      }    
+      
+      returnObj[keyStr] = valStr;
+    }
+  	return returnObj;
+  }
+  else if(json[0] === '[') {
+  	var returnObj = [];
+  	var splitStr = json.split(',');
+    splitStr[0] = splitStr[0].split('[')[1];
+    splitStr[splitStr.length-1] = splitStr[splitStr.length-1].split(']')[0];
+  	//grab only odd split values
+  	for(var i=0; i<splitStr.length; i++) {
+      returnObj.push(parseJSON(splitStr[i]));
+  	}
+    return returnObj;
+  }
+  else {
+    if(json === 'undefined') {return undefined;}
+    else if(json === 'null' || json === 'null ') {return null;}
+    else if(json === 'false') { return false;}
+    else if(json === 'true') { return true;}
+    else if(json.split('"').length === 3) {
+      return json.split('"')[1];
+      //return split[1];
+    }
+    else {
+      return Number(json);
+    }
+  }
 };
